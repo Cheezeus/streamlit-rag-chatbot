@@ -5,7 +5,7 @@ import qdrant_client
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, Settings, PromptTemplate
 from llama_index.core.storage.storage_context import StorageContext
 from llama_index.vector_stores.qdrant import QdrantVectorStore
-from llama_index.embeddings.fastembed import FastEmbedEmbedding
+from llama_index.embeddings.ollama import OllamaEmbedding
 
 from llama_index.core.llms import ChatMessage
 from llama_index.core.storage.chat_store import SimpleChatStore
@@ -45,8 +45,7 @@ class Chatbot:
 
     def set_setting(_arg, llm, embedding_model):
         Settings.llm = Ollama(model=llm, base_url="http://127.0.0.1:11434")
-        Settings.embed_model = FastEmbedEmbedding(
-            model_name=embedding_model, cache_dir="./fastembed_cache")
+        Settings.embed_model = OllamaEmbedding(base_url="http://127.0.0.1:11434", model_name="mxbai-embed-large:latest")
         Settings.system_prompt = """
                                 You are a multi-lingual expert system who has knowledge, based on 
                                 real-time data. You will always try to be helpful and try to help them 
